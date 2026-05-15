@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>🎰 КАЗИНО В ГОСТЯХ У САШИ</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 30%, #0a0f2a, #03050b);
+      font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+      padding: 20px 16px 100px 16px;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 550px;
+      margin: 0 auto;
+    }
+
+    .glass-balance {
+      background: rgba(15, 25, 45, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 56px;
+      padding: 16px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .balance-text {
+      font-size: 15px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #ffd966, #ffb347);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .balance-number {
+      font-size: 44px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFE6B0, #FFB347);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      background: rgba(20, 30, 55, 0.7);
+      backdrop-filter: blur(8px);
+      border: none;
+      padding: 10px 14px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ccc;
+      flex: 1 0 auto;
+      cursor: pointer;
+      transition: 0.2s;
+      text-align: center;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, #ffcd4a, #ffa500);
+      color: #0a0f1a;
+      box-shadow: 0 0 12px rgba(255, 165, 0, 0.6);
+    }
+
+    .game-panel {
+      background: rgba(12, 20, 35, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 48px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 200, 100, 0.4);
+    }
+
+    .slot-reels {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .reel {
+      font-size: 70px;
+      background: #0b101f;
+      padding: 20px 15px;
+      border-radius: 30px;
+      box-shadow: 0 0 0 2px #fbbf24;
+      width: 100px;
+      text-align: center;
+    }
+
+    .spin-btn {
+      background: linear-gradient(95deg, #f5b042, #ff7e05);
+      border: none;
+      font-weight: bold;
+      font-size: 22px;
+      padding: 16px;
+      border-radius: 60px;
+      width: 100%;
+      color: #1e1a0c;
+      margin: 12px 0;
+      cursor: pointer;
+      transition: 0.1s;
+      box-shadow: 0 6px 0 #a34500;
+    }
+
+    .spin-btn:active {
+      transform: translateY(2px);
+    }
+
+    .bet-group {
+      display: flex;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .bet-btn {
+      background: #2a3555;
+      color: white;
+      font-size: 16px;
+      padding: 12px;
+      margin: 0;
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .bet-btn:active {
+      transform: scale(0.96);
+    }
+
+    input {
+      background: #0b0f1c;
+      border: 2px solid #ffb347;
+      border-radius: 48px;
+      padding: 14px;
+      font-size: 18px;
+      text-align: center;
+      color: white;
+      width: 100%;
+      font-weight: bold;
+      outline: none;
+    }
+
+    .roulette-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .roulette-num {
+      background: #1f2a48;
+      text-align: center;
+      padding: 14px 0;
+      border-radius: 60px;
+      font-weight: bold;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .roulette-num.selected {
+      background: radial-gradient(circle, #ffb347, #ff7e05);
+      color: black;
+      box-shadow: 0 0 12px gold;
+    }
+
+    .msg-card {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(12px);
+      border-radius: 48px;
+      padding: 14px;
+      text-align: center;
+      font-weight: 500;
+      border-left: 4px solid gold;
+    }
+
+    .donate-bubble {
+      position: fixed;
+      bottom: 25px;
+      right: 20px;
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, #ff3a3a, #8b0000);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      cursor: pointer;
+      z-index: 1100;
+      animation: sirenPulse 0.9s infinite;
+      border: 2px solid white;
+    }
+
+    @keyframes sirenPulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);}
+      70% { transform: scale(1.08); box-shadow: 0 0 0 18px rgba(255, 0, 0, 0);}
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);}
+    }
+
+    .modal-air {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .modal-card {
+      background: linear-gradient(145deg, #1d1f2c, #0c0f1a);
+      border-radius: 72px;
+      padding: 32px 24px;
+      text-align: center;
+      border: 2px solid #ff4444;
+      max-width: 300px;
+      width: 80%;
+      box-shadow: 0 0 30px red;
+    }
+
+    .phone-glow {
+      font-size: 22px;
+      background: black;
+      padding: 14px;
+      border-radius: 60px;
+      margin: 16px 0;
+      color: #ffaa33;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="glass-balance">
+    <span class="balance-text">💰 КАЗИНО В ГОСТЯХ У САШИ</span>
+    <span class="balance-number" id="balanceValue">2500</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-game="slots">🎰 СЛОТЫ</button>
+    <button class="tab" data-game="roulette">🎡 РУЛЕТКА</button>
+    <button class="tab" data-game="blackjack">♠️ БЛЭКДЖЕК</button>
+    <button class="tab" data-game="highlow">🃏 ВЫШЕ/НИЖЕ</button>
+    <button class="tab" data-game="poker">🃠 ПОКЕР</button>
+    <button class="tab" data-game="war">⚔️ ВОЙНА</button>
+    <button class="tab" data-game="lucky">🍀 LUCKY 7</button>
+  </div>
+
+  <div id="gamePanel" class="game-panel"></div>
+  <div id="globalMessage" class="msg-card">🎲 Сделай ставку и испытай удачу!</div>
+</div>
+
+<div id="donateBtn" class="donate-bubble">❤️</div>
+
+<script>
+  // Telegram WebApp
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+    tg.enableClosingConfirmation();
+  }
+
+  // ========== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ==========
+  let balance = 2500;
+  let modalActive = false;
+  let modalTimeout = null;
+
+  // Звук (опционально, без разрешения пользователя не работает)
+  let audioCtx = null;
+  let soundEnabled = false;
+  let sirenInterval = null;
+
+  function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  function playSiren() {
+    if (!soundEnabled || !audioCtx) return;
+    if (sirenInterval) clearInterval(sirenInterval);
+    const start = audioCtx.currentTime;
+    sirenInterval = setInterval(() => {
+      if (!soundEnabled || !audioCtx) { clearInterval(sirenInterval); return; }
+      if (audioCtx.currentTime - start > 14.5) { clearInterval(sirenInterval); sirenInterval = null; return; }
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.frequency.value = 550 + Math.sin(Date.now() * 0.012) * 200;
+      gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.45);
+    }, 350);
+  }
+
+  function stopSiren() {
+    if (sirenInterval) { clearInterval(sirenInterval); sirenInterval = null; }
+  }
+
+  // Кнопка включения звука
+  const soundBtn = document.createElement('div');
+  soundBtn.innerText = '🔊 ТРЕВОГА';
+  soundBtn.style.position = 'fixed';
+  soundBtn.style.bottom = '100px';
+  soundBtn.style.right = '20px';
+  soundBtn.style.background = '#ff7b00';
+  soundBtn.style.padding = '8px 14px';
+  soundBtn.style.borderRadius = '40px';
+  soundBtn.style.fontSize = '13px';
+  soundBtn.style.fontWeight = 'bold';
+  soundBtn.style.zIndex = '999';
+  soundBtn.style.cursor = 'pointer';
+  soundBtn.style.boxShadow = '0 2px 8px black';
+  document.body.appendChild(soundBtn);
+
+  soundBtn.onclick = async () => {
+    initAudio();
+    await audioCtx.resume();
+    soundEnabled = true;
+    soundBtn.remove();
+    const test = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    test.connect(g);
+    g.connect(audioCtx.destination);
+    test.frequency.value = 880;
+    g.gain.value = 0.1;
+    test.start();
+    test.stop(audioCtx.currentTime + 0.3);
+  };
+
+  // ========== МОДАЛКА ДОНАТА ==========
+  function showDonateModal() {
+    if (modalActive) return;
+    modalActive = true;
+    if (soundEnabled) playSiren();
+
+    const modal = document.createElement('div');
+    modal.className = 'modal-air';
+    modal.innerHTML = `
+      <div class="modal-card">
+        <div style="font-size: 64px;">🚨🚨🚨</div>
+        <h2 style="color: #ff6666;">ВОЗДУШНАЯ ТРЕВОГА</h2>
+        <p>Поддержи казино <strong>"В ГОСТЯХ У САШИ"</strong></p>
+        <div class="phone-glow">📞 +7 980 930-74-22</div>
+        <p>Любая сумма ❤️</p>
+        <button id="closeModalBtn" style="background: #ffaa33; border: none; padding: 12px 24px; border-radius: 60px; margin-top: 10px; font-weight: bold; cursor: pointer;">ЗАКРЫТЬ</button>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    document.getElementById('closeModalBtn').onclick = () => {
+      modal.remove();
+      modalActive = false;
+      stopSiren();
+      if (modalTimeout) clearTimeout(modalTimeout);
+    };
+    modalTimeout = setTimeout(() => {
+      if (modalActive) {
+        modal.remove();
+        modalActive = false;
+        stopSiren();
+      }
+    }, 15000);
+  }
+
+  setInterval(() => {
+    if (!modalActive && soundEnabled) showDonateModal();
+  }, 300000);
+
+  document.getElementById('donateBtn').onclick = () => showDonateModal();
+
+  // ========== UI ФУНКЦИИ ==========
+  function updateBalanceUI() {
+    document.getElementById('balanceValue').innerText = Math.floor(balance);
+  }
+
+  function setMessage(text, isWin = false) {
+    const msg = document.getElementById('globalMessage');
+    msg.innerHTML = text;
+    msg.style.background = isWin ? 'rgba(0,200,0,0.3)' : 'rgba(0,0,0,0.6)';
+    setTimeout(() => { msg.style.background = ''; }, 1500);
+  }
+
+  function checkBet(bet) {
+    if (bet > balance) { setMessage(`❌ Не хватает! Баланс: ${balance}`); return false; }
+    if (bet <= 0) { setMessage(`⚠️ Ставка должна быть больше 0`); return false; }
+    return true;
+  }
+
+  // ========== ИГРЫ ==========
+  const slotSymbols = ['🍒', '🍋', '🍊', '🍉', '🔔', '💎', '7️⃣'];
+  const slotMult = {
+    '🍒🍒🍒': 3, '🍋🍋🍋': 4, '🍊🍊🍊': 5,
+    '🍉🍉🍉': 7, '🔔🔔🔔': 10, '💎💎💎': 20, '7️⃣7️⃣7️⃣': 50
+  };
+
+  function playSlots(bet) {
+    const a = slotSymbols[Math.floor(Math.random() * 7)];
+    const b = slotSymbols[Math.floor(Math.random() * 7)];
+    const c = slotSymbols[Math.floor(Math.random() * 7)];
+    let mult = slotMult[a + b + c] || 0;
+    if (mult === 0 && (a === b || b === c)) mult = 1;
+    const win = bet * mult;
+    if (win > 0) { balance += win; setMessage(`✨ ${a} ${b} ${c} | ВЫИГРЫШ: ${win} ✨`, true); }
+    else { balance -= bet; setMessage(`💔 ${a} ${b} ${c} | ПРОИГРЫШ: -${bet} 💔`); }
+    updateBalanceUI();
+    return [a, b, c];
+  }
+
+  let selectedRoulette = null;
+  function playRoulette(bet, guess) {
+    const res = Math.floor(Math.random() * 12);
+    if (res === guess) { const win = bet * 11; balance += win; setMessage(`🎡 Выпало ${res}! +${win} 🎡`, true); }
+    else { balance -= bet; setMessage(`😭 Выпало ${res}, твоё ${guess}. -${bet} 😭`); }
+    updateBalanceUI();
+  }
+
+  let bjActive = false, bjBet = 0, bjPlayer = [], bjDealer = [];
+  function getCard() { return Math.floor(Math.random() * 10) + 1; }
+  function score(cards) { let s = cards.reduce((a,b)=>a+b,0); if(s>21 && cards.includes(11)) { cards[cards.indexOf(11)]=1; s=cards.reduce((a,b)=>a+b,0); } return s; }
+  function dealerPlay() { while(score(bjDealer) < 17) bjDealer.push(getCard()); }
+  function resolveBJ() {
+    const pScore = score(bjPlayer), dScore = score(bjDealer);
+    if(pScore>21) setMessage(`💔 Перебор! -${bjBet}`);
+    else if(dScore>21 || pScore>dScore) { balance += bjBet*2; setMessage(`🎉 Победа! +${bjBet*2} 🎉`, true); }
+    else if(pScore===dScore) { balance += bjBet; setMessage(`Ничья, возврат ${bjBet}`); }
+    else setMessage(`💔 Дилер победил! -${bjBet}`);
+    updateBalanceUI(); bjActive=false;
+  }
+
+  let hlCard = Math.floor(Math.random()*13)+2;
+  function playHighLow(bet, choice) {
+    const next = Math.floor(Math.random()*13)+2;
+    const win = (choice==='higher' && next>hlCard) || (choice==='lower' && next<hlCard);
+    if(win) { balance += bet; setMessage(`✅ ${hlCard} → ${next} | +${bet} ✅`, true); }
+    else { balance -= bet; setMessage(`❌ ${hlCard} → ${next} | -${bet} ❌`); }
+    hlCard = next; updateBalanceUI();
+  }
+
+  function playPoker(bet) {
+    const u = Math.floor(Math.random()*13)+2, c = Math.floor(Math.random()*13)+2;
+    if(u>c) { balance += bet; setMessage(`🃠 ${u} vs ${c} | ПОБЕДА +${bet}`, true); }
+    else if(u<c) { balance -= bet; setMessage(`🃠 ${u} vs ${c} | ПРОИГРЫШ -${bet}`); }
+    else setMessage(`Ничья!`);
+    updateBalanceUI();
+  }
+
+  function playWar(bet) {
+    const u = Math.floor(Math.random()*13)+2, c = Math.floor(Math.random()*13)+2;
+    if(u>c) { balance += bet; setMessage(`⚔️ ${u} vs ${c} | +${bet} ⚔️`, true); }
+    else if(u<c) { balance -= bet; setMessage(`⚔️ ${u} vs ${c} | -${bet} ⚔️`); }
+    else { balance += Math.floor(bet/2); setMessage(`Ничья, возврат ${Math.floor(bet/2)}`); }
+    updateBalanceUI();
+  }
+
+  function playLucky(bet) {
+    const roll = Math.floor(Math.random()*12)+1;
+    if(roll===7) { balance += bet*5; setMessage(`🍀 LUCKY 7! +${bet*5} 🍀`, true); }
+    else if(roll%2===0) { balance += Math.floor(bet*0.5); setMessage(`Чётное ${roll}, возврат +${Math.floor(bet*0.5)}`, true); }
+    else { balance -= bet; setMessage(`Неудача ${roll} -${bet}`); }
+    updateBalanceUI();
+  }
+
+  // ========== ЗАГРУЗКА ИГР ==========
+  function loadGame(game) {
+    const panel = document.getElementById('gamePanel');
+    if (game === 'slots') {
+      panel.innerHTML = `
+        <div class="slot-reels"><div class="reel">🎰</div><div class="reel">🎰</div><div class="reel">🎰</div></div>
+        <div class="bet-group"><button class="bet-btn" id="s10">+10</button><button class="bet-btn" id="s50">+50</button><button class="bet-btn" id="s100">+100</button></div>
+        <input type="number" id="slotBet" value="50">
+        <button class="spin-btn" id="spinSlot">🎲 КРУТИТЬ СЛОТЫ</button>
+      `;
+      document.getElementById('spinSlot').onclick = () => {
+        const b = parseInt(document.getElementById('slotBet').value);
+        if (checkBet(b)) {
+          const res = playSlots(b);
+          const reels = document.querySelectorAll('.reel');
+          reels.forEach((r, i) => r.innerText = res[i]);
+        }
+      };
+      document.getElementById('s10').onclick = () => { let i=document.getElementById('slotBet'); i.value=Math.min(parseInt(i.value)+10, balance); };
+      document.getElementById('s50').onclick = () => { let i=document.getElementById('slotBet'); i.value=Math.min(parseInt(i.value)+50, balance); };
+      document.getElementById('s100').onclick = () => { let i=document.getElementById('slotBet'); i.value=Math.min(parseInt(i.value)+100, balance); };
+    }
+    else if (game === 'roulette') {
+      selectedRoulette = null;
+      panel.innerHTML = `<div class="roulette-grid" id="rg"></div><div class="bet-group"><button class="bet-btn" id="rb10">+10</button><button class="bet-btn" id="rb50">+50</button></div><input id="rBet" value="50"><button class="spin-btn" id="playR">🎡 СТАВКА</button>`;
+      const grid = document.getElementById('rg');
+      for (let i=0; i<=11; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'roulette-num';
+        cell.innerText = i;
+        cell.onclick = () => { document.querySelectorAll('.roulette-num').forEach(c=>c.classList.remove('selected')); cell.classList.add('selected'); selectedRoulette = i; };
+        grid.appendChild(cell);
+      }
+      document.getElementById('playR').onclick = () => {
+        const b = parseInt(document.getElementById('rBet').value);
+        if (!checkBet(b)) return;
+        if (selectedRoulette === null) { setMessage("Выбери число!"); return; }
+        playRoulette(b, selectedRoulette);
+        selectedRoulette = null;
+        document.querySelectorAll('.roulette-num').forEach(c=>c.classList.remove('selected'));
+      };
+      document.getElementById('rb10').onclick = () => { let i=document.getElementById('rBet'); i.value=Math.min(parseInt(i.value)+10, balance); };
+      document.getElementById('rb50').onclick = () => { let i=document.getElementById('rBet'); i.value=Math.min(parseInt(i.value)+50, balance); };
+    }
+    else if (game === 'blackjack') {
+      panel.innerHTML = `<div>🎴 Твои: <span id="bjP">-</span> (<span id="bjPS">0</span>)</div><div>🤵 Дилер: <span id="bjD">?</span></div><input id="bjBet" value="100"><div class="bet-group"><button class="bet-btn" id="bjHit">ВЗЯТЬ</button><button class="bet-btn" id="bjStand">СТОП</button><button class="bet-btn" id="bjNew">НОВАЯ</button></div>`;
+      document.getElementById('bjNew').onclick = () => {
+        const b = parseInt(document.getElementById('bjBet').value);
+        if (!checkBet(b)) return;
+        balance -= b; updateBalanceUI(); bjBet = b;
+        bjPlayer = [getCard(), getCard()]; bjDealer = [getCard(), getCard()];
+        bjActive = true;
+        document.getElementById('bjP').innerText = bjPlayer.join(', ');
+        document.getElementById('bjPS').innerText = score(bjPlayer);
+        document.getElementById('bjD').innerText = bjDealer[0] + ", ?";
+      };
+      document.getElementById('bjHit').onclick = () => {
+        if (!bjActive) { setMessage("Начни новую!"); return; }
+        bjPlayer.push(getCard());
+        const s = score(bjPlayer);
+        document.getElementById('bjP').innerText = bjPlayer.join(', ');
+        document.getElementById('bjPS').innerText = s;
+        if (s > 21) { dealerPlay(); resolveBJ(); document.getElementById('bjD').innerText = bjDealer.join(', '); }
+      };
+      document.getElementById('bjStand').onclick = () => { if(bjActive) { dealerPlay(); resolveBJ(); document.getElementById('bjD').innerText = bjDealer.join(', '); } };
+    }
+    else if (game === 'highlow') {
+      panel.innerHTML = `<div style="font-size:32px;text-align:center">📊 <span id="hlC">${hlCard}</span></div><div class="bet-group"><button class="bet-btn" id="hlH">🔥 ВЫШЕ</button><button class="bet-btn" id="hlL">❄️ НИЖЕ</button></div><input id="hlBet" value="50"><button class="spin-btn" id="hlPlay">СТАВКА</button>`;
+      let choice = null;
+      document.getElementById('hlH').onclick = () => { choice = 'higher'; setMessage("Выбрано: ВЫШЕ"); };
+      document.getElementById('hlL').onclick = () => { choice = 'lower'; setMessage("Выбрано: НИЖЕ"); };
+      document.getElementById('hlPlay').onclick = () => {
+        const b = parseInt(document.getElementById('hlBet').value);
+        if (!checkBet(b)) return;
+        if (!choice) { setMessage("Выбери ВЫШЕ или НИЖЕ!"); return; }
+        playHighLow(b, choice);
+        document.getElementById('hlC').innerText = hlCard;
+        choice = null;
+      };
+    }
+    else if (game === 'poker') {
+      panel.innerHTML = `<div style="text-align:center;margin:20px 0">🃠 Сравни карты</div><input id="pokerBet" value="50"><button class="spin-btn" id="pokerPlay">СРАВНИТЬ</button>`;
+      document.getElementById('pokerPlay').onclick = () => { const b = parseInt(document.getElementById('pokerBet').value); if(checkBet(b)) playPoker(b); };
+    }
+    else if (game === 'war') {
+      panel.innerHTML = `<div style="text-align:center;margin:20px 0">⚔️ ВОЙНА КАРТ</div><input id="warBet" value="50"><button class="spin-btn" id="warPlay">В АТАКУ</button>`;
+      document.getElementById('warPlay').onclick = () => { const b = parseInt(document.getElementById('warBet').value); if(checkBet(b)) playWar(b); };
+    }
+    else if (game === 'lucky') {
+      panel.innerHTML = `<div style="text-align:center;margin:20px 0">🍀 БРОСОК КУБИКА (1-12)</div><input id="luckyBet" value="50"><button class="spin-btn" id="luckyPlay">БРОСИТЬ</button>`;
+      document.getElementById('luckyPlay').onclick = () => { const b = parseInt(document.getElementById('luckyBet').value); if(checkBet(b)) playLucky(b); };
+    }
+  }
+
+  // Переключение вкладок
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      loadGame(tab.dataset.game);
+    });
+  });
+
+  loadGame('slots');
+  updateBalanceUI();
+</script>
+</body>
+</html>
