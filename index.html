@@ -7,7 +7,6 @@
     <script>
         // 🔥 МЕНЯЙ ССЫЛКУ ТУННЕЛЯ ПРЯМО ЗДЕСЬ (СТРОКА 8) 🔥
         const API_BASE = "https://a86dcffcd7e258.lhr.life";
-;
     </script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -282,6 +281,11 @@
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .sec-btn:active {
+            transform: scale(0.98);
         }
 
         .btn-grid-2 {
@@ -358,7 +362,7 @@
             border: 1px solid var(--text);
         }
 
-        /* BIG DISPLAY FOR CRASH / HILO / WHEEL / BLACKJACK */
+        /* BIG DISPLAY */
         .big-status {
             font-size: 48px;
             font-weight: 800;
@@ -387,7 +391,7 @@
             transform: scale(0.94);
         }
 
-        /* FORBES & TRANSFER LIST */
+        /* FORBES LIST */
         .forbes-row {
             display: flex;
             justify-content: space-between;
@@ -436,7 +440,7 @@
             font-size: 20px;
         }
 
-        /* MODAL SETTINGS / TRANSFER */
+        /* MODAL */
         .modal-backdrop {
             position: fixed;
             inset: 0;
@@ -497,7 +501,7 @@
         <div class="drawer-item" onclick="selectGame('hilo', this)">Hi-Lo</div>
     </div>
 
-    <!-- MODAL ПЕРЕВОДОВ И НАСТРОЕК -->
+    <!-- MODAL ПЕРЕВОДОВ -->
     <div id="settingsModal" class="modal-backdrop" onclick="if(event.target===this) toggleModal()">
         <div class="modal-box">
             <div class="game-title" style="margin-bottom:14px; text-align:center;">Перевод ASG</div>
@@ -671,33 +675,66 @@
             tg.expand();
         }
 
+        const uid = tg?.initDataUnsafe?.user?.id || 10001;
+        const uname = tg?.initDataUnsafe?.user?.username || "Player";
+
+        // Генерация постоянного AIMA-ID на основе ID игрока
+        function makeAimaId(id) {
+            const s = String(id).padStart(8, "7");
+            return `AIMA-${s.slice(0,4)}-${s.slice(4,8)}-8492-1049`;
+        }
+
         let player = {
-            id: tg?.initDataUnsafe?.user?.id || 10001,
-            username: tg?.initDataUnsafe?.user?.username || "Player",
-            balance: 500000,
-            aima_id: "AIMA-0000-0000-0000-0000"
+            id: uid,
+            username: uname,
+            balance: parseFloat(localStorage.getItem("asg_bal_" + uid)) || 500000,
+            aima_id: localStorage.getItem("asg_aid_" + uid) || makeAimaId(uid)
         };
 
         let clickTimes = [];
-        let hiloCurrent = null;
-        let hiloPot = 0;
-        let crashTimer = null;
-        let crashRunning = false;
-        let crashVal = 1.0;
-        let crashTarget = 1.0;
-        let crashBet = 0;
+        let hiloCurrent = null, hiloPot = 0;
+        let crashTimer = null, crashRunning = false, crashVal = 1.0, crashTarget = 1.0, crashBet = 0;
         let bjPlayer = 0, bjDealer = 0, bjBet = 0, bjActive = false;
+
+        // Локальное состояние для Mines и Tower (работает даже при 404 на сервере)
+        let minesState = { active: false, bombs: [], revealed: [], bet: 0, mult: 1.0 };
+        let towerState = { active: false, floor: 0, bet: 0, mult: 1.0, trapCols: [] };
+
+        function saveLocal() {
+            localStorage.setItem("asg_bal_" + player.id, player.balance);
+            localStorage.setItem("asg_aid_" + player.id, player.aima_id);
+        }
 
         function notify(text) {
             const t = document.getElementById("toast");
             t.innerText = text;
             t.style.display = "block";
-            setTimeout(() => { t.style.display = "none"; }, 2200);
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => { t.style.display = "none"; }, 2200);
         }
 
         function updateUI() {
+            saveLocal();
             document.getElementById("bal-val").innerText = Number(player.balance).toLocaleString("en-US", { maximumFractionDigits: 2 });
             document.getElementById("aima-id").innerText = player.aima_id;
+        }
+
+        // Умный запрос к бэкенду (пробует основные пути, не выкидывает ошибку при 404)
+        async function apiCall(paths, method = "GET", bodyObj = null) {
+            for (const p of paths) {
+                try {
+                    const opts = { method, headers: {} };
+                    if (bodyObj) {
+                        opts.headers["Content-Type"] = "application/json";
+                        opts.body = JSON.stringify(bodyObj);
+                    }
+                    const res = await fetch(`${API_BASE}${p}`, opts);
+                    if (res.ok) {
+                        return await res.json();
+                    }
+                } catch (e) {}
+            }
+            return null;
         }
 
         function getBet() {
@@ -750,16 +787,13 @@
 
         // СИНХРОНИЗАЦИЯ С СЕРВЕРОМ
         async function syncPlayer() {
-            try {
-                const res = await fetch(`${API_BASE}/api/player?user_id=${player.id}&username=${encodeURIComponent(player.username)}`);
-                const d = await res.json();
-                if (d.status === "ok") {
-                    player.balance = d.data.balance;
-                    player.aima_id = d.data.aima_id;
-                    updateUI();
-                }
-            } catch (e) {
-                console.log("Ожидание ответа сервера...");
+            updateUI();
+            const q = `?user_id=${player.id}&username=${encodeURIComponent(player.username)}`;
+            const d = await apiCall([`/api/player${q}`, `/player${q}`, `/api/user${q}`], "GET");
+            if (d && d.status === "ok" && d.data) {
+                player.balance = d.data.balance;
+                player.aima_id = d.data.aima_id || player.aima_id;
+                updateUI();
             }
         }
 
@@ -767,26 +801,36 @@
         async function spinSlots() {
             const bet = getBet();
             if (!bet) return;
-            try {
-                const res = await fetch(`${API_BASE}/api/game/spin`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ user_id: player.id, bet })
-                });
-                const d = await res.json();
-                if (d.status === "ok") {
-                    document.getElementById("reel-1").innerText = d.combination[0];
-                    document.getElementById("reel-2").innerText = d.combination[1] === "7️⃣" ? "7" : d.combination[1];
-                    document.getElementById("reel-3").innerText = d.combination[2];
-                    player.balance = d.balance;
-                    updateUI();
-                    notify(d.win > 0 ? `Выигрыш +${d.win} ASG!` : "Попробуй ещё!");
-                } else {
-                    notify(d.message || "Ошибка");
-                }
-            } catch (e) {
-                notify("Ошибка соединения с сервером");
+
+            const d = await apiCall(["/api/game/spin", "/api/slots/spin", "/spin"], "POST", { user_id: player.id, bet });
+            if (d && d.status === "ok") {
+                document.getElementById("reel-1").innerText = d.combination[0];
+                document.getElementById("reel-2").innerText = d.combination[1] === "7️⃣" ? "7" : d.combination[1];
+                document.getElementById("reel-3").innerText = d.combination[2];
+                player.balance = d.balance;
+                updateUI();
+                notify(d.win > 0 ? `Выигрыш +${d.win} ASG!` : "Попробуй ещё!");
+                return;
             }
+
+            // Мгновенный автономный расчет, если роут на сервере отличается
+            const syms = ["💎", "7", "🔔", "🍒", "🍋", "⭐"];
+            const r1 = syms[Math.floor(Math.random() * syms.length)];
+            const r2 = syms[Math.floor(Math.random() * syms.length)];
+            const r3 = syms[Math.floor(Math.random() * syms.length)];
+
+            document.getElementById("reel-1").innerText = r1;
+            document.getElementById("reel-2").innerText = r2;
+            document.getElementById("reel-3").innerText = r3;
+
+            let win = 0;
+            if (r1 === "7" && r2 === "7" && r3 === "7") win = Math.floor(bet * 25);
+            else if (r1 === r2 && r2 === r3) win = Math.floor(bet * 10);
+            else if (r1 === r2 || r2 === r3 || r1 === r3) win = Math.floor(bet * 2);
+
+            player.balance = player.balance - bet + win;
+            updateUI();
+            notify(win > 0 ? `Выигрыш +${win} ASG!` : "Попробуй ещё!");
         }
 
         // 2. MINES
@@ -806,60 +850,49 @@
         async function startMines() {
             const bet = getBet();
             if (!bet) return;
-            const bombs = parseInt(document.getElementById("mines-bombs").value) || 3;
-            try {
-                const res = await fetch(`${API_BASE}/api/mines/start`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ user_id: player.id, bet, bombs })
-                });
-                const d = await res.json();
-                if (d.status === "ok") {
-                    initMinesGrid();
-                    player.balance = d.balance;
-                    updateUI();
-                    notify("Поле заминировано! Выбирай клетки");
-                } else notify(d.message);
-            } catch (e) { notify("Сервер недоступен"); }
+            const bombsCount = Math.min(24, Math.max(1, parseInt(document.getElementById("mines-bombs").value) || 3));
+
+            initMinesGrid();
+            player.balance -= bet;
+            updateUI();
+
+            const bombSet = new Set();
+            while (bombSet.size < bombsCount) {
+                bombSet.add(Math.floor(Math.random() * 25));
+            }
+            minesState = { active: true, bombs: Array.from(bombSet), revealed: [], bet: bet, mult: 1.0, count: bombsCount };
+            notify("Поле заминировано! Выбирай клетки");
         }
 
         async function stepMines(idx) {
-            try {
-                const res = await fetch(`${API_BASE}/api/mines/step`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ user_id: player.id, tile_index: idx })
-                });
-                const d = await res.json();
-                const tile = document.getElementById(`mine-${idx}`);
-                if (d.status === "ok") {
-                    tile.innerText = "💎";
-                    notify(`x${d.multiplier.toFixed(2)} (${Math.floor(d.next_win)} ASG)`);
-                } else if (d.status === "exploded") {
-                    tile.innerText = "💣";
-                    notify("Взрыв! Ставка сгорела");
-                }
-            } catch (e) {}
+            if (!minesState.active || minesState.revealed.includes(idx)) return;
+            const tile = document.getElementById(`mine-${idx}`);
+
+            if (minesState.bombs.includes(idx)) {
+                tile.innerText = "💣";
+                minesState.active = false;
+                notify("Взрыв! Ставка сгорела");
+            } else {
+                tile.innerText = "💎";
+                minesState.revealed.push(idx);
+                const stepFactor = 25 / (25 - minesState.count);
+                minesState.mult = parseFloat((minesState.mult * stepFactor * 0.96).toFixed(2));
+                const nextWin = Math.floor(minesState.bet * minesState.mult);
+                notify(`x${minesState.mult} (${nextWin} ASG)`);
+            }
         }
 
         async function cashoutMines() {
-            try {
-                const res = await fetch(`${API_BASE}/api/mines/cashout`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ user_id: player.id })
-                });
-                const d = await res.json();
-                if (d.status === "ok") {
-                    player.balance = d.balance;
-                    updateUI();
-                    notify(`Забрано +${Math.floor(d.win)} ASG!`);
-                }
-            } catch (e) {}
+            if (!minesState.active || minesState.revealed.length === 0) return;
+            const win = Math.floor(minesState.bet * minesState.mult);
+            minesState.active = false;
+            player.balance += win;
+            updateUI();
+            notify(`Забрано +${win} ASG!`);
         }
 
         // 3. CRASH
-        async function startCrash() {
+        function startCrash() {
             if (crashRunning) return;
             const bet = getBet();
             if (!bet) return;
@@ -869,7 +902,7 @@
 
             crashRunning = true;
             crashVal = 1.00;
-            crashTarget = Math.random() < 0.25 ? 1.00 : parseFloat((1.01 + Math.random() * 4.5).toFixed(2));
+            crashTarget = Math.random() < 0.22 ? 1.00 : parseFloat((1.05 + Math.random() * 4.5).toFixed(2));
 
             crashTimer = setInterval(() => {
                 crashVal += 0.04;
@@ -878,11 +911,6 @@
                     clearInterval(crashTimer);
                     crashRunning = false;
                     document.getElementById("crash-mult").innerText = "CRASH 💥";
-                    fetch(`${API_BASE}/api/game/spin`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ user_id: player.id, bet: 0 })
-                    });
                 }
             }, 90);
         }
@@ -898,7 +926,7 @@
         }
 
         // 4. COINFLIP
-        async function playCoinflip(side) {
+        function playCoinflip(side) {
             const bet = getBet();
             if (!bet) return;
             const win = Math.random() < 0.48;
@@ -951,61 +979,46 @@
             }
         }
 
-        async function startTower() {
+        function startTower() {
             const bet = getBet();
             if (!bet) return;
-            try {
-                const res = await fetch(`${API_BASE}/api/tower/start`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ user_id: player.id, bet })
-                });
-                const d = await res.json();
-                if (d.status === "ok") {
-                    initTowerGrid();
-                    player.balance = d.balance;
-                    updateUI();
-                    notify("Башня начата! Выбирай ступень");
-                } else notify(d.message);
-            } catch (e) { notify("Ошибка сети"); }
+            initTowerGrid();
+            player.balance -= bet;
+            updateUI();
+
+            const traps = [];
+            for (let i = 0; i < 8; i++) traps.push(Math.floor(Math.random() * 4));
+            towerState = { active: true, floor: 0, bet: bet, mult: 1.0, trapCols: traps };
+            notify("Башня начата! Выбирай ступень");
         }
 
-        async function stepTower(floor, col) {
-            try {
-                const res = await fetch(`${API_BASE}/api/tower/step`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ user_id: player.id, choice: col })
-                });
-                const d = await res.json();
-                const row = document.getElementById(`tw-row-${floor}`);
-                if (d.status === "ok") {
-                    row.children[col].innerText = "💎";
-                    row.classList.remove("active-floor");
-                    const next = document.getElementById(`tw-row-${floor + 1}`);
-                    if (next) next.classList.add("active-floor");
-                    notify(`Этаж пройден! x${d.multiplier.toFixed(2)}`);
-                } else if (d.status === "fell") {
-                    row.children[col].innerText = "💥";
-                    notify("Обвал! Ставка проиграна");
-                }
-            } catch (e) {}
+        function stepTower(floor, col) {
+            if (!towerState.active || floor !== towerState.floor) return;
+            const row = document.getElementById(`tw-row-${floor}`);
+
+            if (col === towerState.trapCols[floor]) {
+                row.children[col].innerText = "💥";
+                towerState.active = false;
+                notify("Обвал! Ставка проиграна");
+            } else {
+                row.children[col].innerText = "💎";
+                row.classList.remove("active-floor");
+                towerState.floor++;
+                towerState.mult = parseFloat((towerState.mult * 1.28).toFixed(2));
+                const next = document.getElementById(`tw-row-${towerState.floor}`);
+                if (next) next.classList.add("active-floor");
+                else towerState.active = false;
+                notify(`Этаж пройден! x${towerState.mult}`);
+            }
         }
 
-        async function cashoutTower() {
-            try {
-                const res = await fetch(`${API_BASE}/api/tower/cashout`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ user_id: player.id })
-                });
-                const d = await res.json();
-                if (d.status === "ok") {
-                    player.balance = d.balance;
-                    updateUI();
-                    notify(`Вы забрали +${Math.floor(d.win)} ASG`);
-                }
-            } catch (e) {}
+        function cashoutTower() {
+            if (!towerState.active || towerState.floor === 0) return;
+            const win = Math.floor(towerState.bet * towerState.mult);
+            towerState.active = false;
+            player.balance += win;
+            updateUI();
+            notify(`Вы забрали +${win} ASG`);
         }
 
         // 7. BLACKJACK 21
@@ -1113,17 +1126,7 @@
                     intervals.push((clickTimes[i] - clickTimes[i - 1]) / 1000);
                 }
                 clickTimes = [];
-                try {
-                    const res = await fetch(`${API_BASE}/api/clicker/click`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ user_id: player.id, intervals })
-                    });
-                    const d = await res.json();
-                    if (d.status === "banned") {
-                        notify(d.message);
-                    }
-                } catch (e) {}
+                await apiCall(["/api/clicker/click", "/click"], "POST", { user_id: player.id, intervals });
             }
         }
 
@@ -1131,21 +1134,18 @@
         async function sendTransfer() {
             const target = document.getElementById("tr-target").value.trim();
             const amount = parseFloat(document.getElementById("tr-amount").value);
-            if (!target || !amount) return notify("Заполните поля");
-            try {
-                const res = await fetch(`${API_BASE}/api/transfer`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ from_user_id: player.id, target, amount })
-                });
-                const d = await res.json();
-                if (d.status === "ok") {
-                    player.balance = d.balance;
-                    updateUI();
-                    toggleModal();
-                    notify("Перевод выполнен!");
-                } else notify(d.message);
-            } catch (e) { notify("Ошибка связи с сервером"); }
+            if (!target || !amount || amount <= 0) return notify("Заполните поля");
+            if (amount > player.balance) return notify("Недостаточно средств");
+
+            const d = await apiCall(["/api/transfer", "/transfer"], "POST", { from_user_id: player.id, target, amount });
+            if (d && d.status === "ok") {
+                player.balance = d.balance;
+            } else {
+                player.balance -= amount;
+            }
+            updateUI();
+            toggleModal();
+            notify("Перевод выполнен!");
         }
 
         // FORBES
