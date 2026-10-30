@@ -73,9 +73,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .toast-pill.show {
-            transform: translateX(-50%) translateY(0);
-        }
+        .toast-pill.show { transform: translateX(-50%) translateY(0); }
 
         .header-bar {
             display: flex;
@@ -83,16 +81,8 @@
             justify-content: space-between;
             margin-bottom: 16px;
         }
-        .left-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .right-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .left-header { display: flex; align-items: center; gap: 12px; }
+        .right-header { display: flex; align-items: center; gap: 10px; }
         .circle-btn {
             width: 42px;
             height: 42px;
@@ -118,7 +108,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border-col);
             border-radius: 26px;
-            padding: 22px 16px;
+            padding: 22px 14px;
             text-align: center;
             margin-bottom: 14px;
             box-shadow: 0 10px 28px rgba(0,0,0,0.18);
@@ -131,17 +121,22 @@
             text-transform: uppercase;
             margin-bottom: 6px;
         }
+        .account-balance-wrap {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            white-space: nowrap;
+            margin-bottom: 12px;
+        }
         .account-balance {
-            font-size: 38px;
+            font-size: 36px;
             font-weight: 800;
             letter-spacing: -0.8px;
             line-height: 1.1;
-            margin-bottom: 14px;
-            word-break: break-all;
         }
-        .account-balance span.unit {
-            font-size: 20px;
-            font-weight: 600;
+        .account-balance-wrap span.unit {
+            font-size: 18px;
+            font-weight: 700;
             color: var(--text-secondary);
             margin-left: 6px;
         }
@@ -152,7 +147,7 @@
             border-radius: 999px;
             font-family: "SF Mono", "JetBrains Mono", monospace;
             font-size: 11px;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             color: var(--text-secondary);
             border: 1px solid var(--border-col);
             cursor: pointer;
@@ -224,9 +219,7 @@
             padding: 14px 8px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.12s, border-color 0.2s;
         }
-        .game-select-tile:active { transform: scale(0.95); }
         .game-select-tile .g-ico { font-size: 24px; margin-bottom: 6px; display: block; }
         .game-select-tile .g-name { font-size: 12px; font-weight: 700; color: var(--text-primary); }
 
@@ -264,16 +257,8 @@
             margin-bottom: 16px;
             box-shadow: 0 10px 28px rgba(0,0,0,0.18);
         }
-        .stage-title {
-            font-size: 19px;
-            font-weight: 800;
-            margin: 0 0 18px 0;
-        }
-        .sub-hint {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin: 14px 0 18px 0;
-        }
+        .stage-title { font-size: 19px; font-weight: 800; margin: 0 0 18px 0; }
+        .sub-hint { font-size: 13px; color: var(--text-secondary); margin: 14px 0 18px 0; }
 
         .pill-btn-main {
             width: 100%;
@@ -285,7 +270,7 @@
             font-size: 16px;
             font-weight: 800;
             cursor: pointer;
-            transition: transform 0.1s, opacity 0.2s;
+            transition: transform 0.1s;
         }
         .pill-btn-main:active { transform: scale(0.97); }
         .pill-btn-main:disabled { opacity: 0.45; pointer-events: none; }
@@ -329,11 +314,8 @@
             justify-content: center;
             font-size: 44px;
             font-weight: 800;
-            transition: transform 0.15s;
         }
-        .slot-cell.spin-anim {
-            animation: reelBounce 0.12s infinite;
-        }
+        .slot-cell.spin-anim { animation: reelBounce 0.12s infinite; }
         @keyframes reelBounce {
             0% { transform: translateY(-5px); }
             50% { transform: translateY(5px); }
@@ -346,9 +328,6 @@
             border-radius: 14px;
             padding: 10px;
             margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         .mines-input-box select {
             background: transparent;
@@ -378,9 +357,7 @@
             font-weight: 800;
             color: var(--text-primary);
             cursor: pointer;
-            transition: background 0.15s, transform 0.1s;
         }
-        .m-tile:active { transform: scale(0.92); }
         .m-tile.gem { background: rgba(34, 197, 94, 0.22); border-color: var(--green); }
         .m-tile.mine { background: rgba(239, 68, 68, 0.28); border-color: var(--red); }
 
@@ -404,18 +381,9 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 16px;
-            position: relative;
-            overflow: hidden;
         }
-        .crash-num {
-            font-size: 46px;
-            font-weight: 900;
-        }
-        .crash-status {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-top: 6px;
-        }
+        .crash-num { font-size: 46px; font-weight: 900; }
+        .crash-status { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
 
         .mint-circle {
             width: 190px;
@@ -431,7 +399,6 @@
             font-size: 42px;
             font-weight: 900;
             color: #ffffff;
-            letter-spacing: 1px;
             cursor: pointer;
             transition: transform 0.07s;
         }
@@ -507,15 +474,15 @@
 
     <section class="account-card">
         <div class="account-label">СЧЕТ ИГРОКА</div>
-        <div class="account-balance">
-            <span id="ui-balance">500,000</span><span class="unit">ASG</span>
+        <div class="account-balance-wrap">
+            <span class="account-balance" id="ui-balance">366,899</span>
+            <span class="unit">ASG</span>
         </div>
-        <div class="aima-pill" id="ui-aima-id" onclick="copyAimaId()">AIMA-0000-0000-0000-0000</div>
+        <div class="aima-pill" id="ui-aima-id" onclick="copyAimaId()">AIMA-5399-8193-8492-1049</div>
     </section>
 
-    <!-- =================== ВКЛАДКА 1: ИГРЫ (ВСЕ 9 ИГР) =================== -->
+    <!-- ВКЛАДКА 1: ИГРЫ -->
     <main id="tab-games" class="main-tab active">
-
         <div class="bet-input-card">
             <button class="bet-quick-btn" onclick="adjustBet(0.5)">1/2</button>
             <input type="number" id="bet-amount" value="100" min="1" placeholder="Ставка ASG">
@@ -534,7 +501,7 @@
             <button class="strip-pill" onclick="selectGame('thimbles', this)">🥤 Напёрстки</button>
         </div>
 
-        <!-- 1. CLASSIC SLOTS -->
+        <!-- 1. SLOTS -->
         <div id="game-slots" class="stage-card game-view active">
             <h3 class="stage-title">Classic Slots</h3>
             <div class="slots-wrap">
@@ -577,7 +544,7 @@
             </div>
         </div>
 
-        <!-- 4. HI-LO CARDS -->
+        <!-- 4. HI-LO -->
         <div id="game-hilo" class="stage-card game-view">
             <h3 class="stage-title">Hi-Lo Cards</h3>
             <div class="hilo-big-card" id="hilo-card">?</div>
@@ -590,7 +557,7 @@
             </div>
         </div>
 
-        <!-- 5. COIN FLIP -->
+        <!-- 5. COIN -->
         <div id="game-coin" class="stage-card game-view">
             <h3 class="stage-title">Орёл и Решка</h3>
             <div class="hilo-big-card" id="coin-visual">🪙</div>
@@ -605,7 +572,7 @@
         <div id="game-dice" class="stage-card game-view">
             <h3 class="stage-title">Кости (2 Кубика)</h3>
             <div class="hilo-big-card" id="dice-visual">🎲 🎲</div>
-            <div class="sub-hint" id="dice-hint">Выберите исход броска двух костей (сумма от 2 до 12)</div>
+            <div class="sub-hint" id="dice-hint">Выберите исход броска двух костей</div>
             <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
                 <button class="pill-btn-sec" onclick="playDice('low')">2–6 (x1.9)</button>
                 <button class="pill-btn-main" onclick="playDice('seven')">Ровно 7 (x4.5)</button>
@@ -628,7 +595,7 @@
         <!-- 8. TOWER -->
         <div id="game-tower" class="stage-card game-view">
             <h3 class="stage-title">Tower (Башня)</h3>
-            <div class="sub-hint" id="tower-hint">Этаж: 0 / 5 — Выберите безопасную дверь</div>
+            <div class="sub-hint" id="tower-hint">Этаж: 0 / 5 — Выберите дверь</div>
             <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:16px;">
                 <button class="slot-cell" style="width:100%; height:78px; font-size:28px;" onclick="stepTower(0)" id="tw-0">🚪</button>
                 <button class="slot-cell" style="width:100%; height:78px; font-size:28px;" onclick="stepTower(1)" id="tw-1">🚪</button>
@@ -643,29 +610,26 @@
         <!-- 9. THIMBLES -->
         <div id="game-thimbles" class="stage-card game-view">
             <h3 class="stage-title">Напёрстки (x2.6)</h3>
-            <div class="sub-hint" id="thimbles-hint">Где спрятан алмаз 💎? Выберите стакан</div>
+            <div class="sub-hint" id="thimbles-hint">Где спрятан алмаз 💎?</div>
             <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:16px 0;">
                 <button class="slot-cell" style="width:100%; height:84px; font-size:36px;" onclick="pickThimble(0)" id="th-0">🥤</button>
                 <button class="slot-cell" style="width:100%; height:84px; font-size:36px;" onclick="pickThimble(1)" id="th-1">🥤</button>
                 <button class="slot-cell" style="width:100%; height:84px; font-size:36px;" onclick="pickThimble(2)" id="th-2">🥤</button>
             </div>
         </div>
-
     </main>
 
-    <!-- =================== ВКЛАДКА 2: ФАРМ + КОЛЛЕКТОРЫ + ПЕРЕВОДЫ =================== -->
+    <!-- ВКЛАДКА 2: ФАРМ -->
     <main id="tab-farm" class="main-tab">
         <div class="stage-card">
             <h3 class="stage-title">Чеканка фишек ASG</h3>
             <div class="mint-circle" onclick="mintClick()">ASG</div>
-            <div class="sub-hint" id="mint-sub">+7 ASG на баланс (3 ASG налог казино 30%)</div>
+            <div class="sub-hint">+7 ASG на баланс (3 ASG налог казино 30%)</div>
         </div>
 
         <div class="stage-card">
             <h3 class="stage-title">Коллекторское агентство</h3>
-            <div class="sub-hint">
-                Отправьте коллекторов выбить долг из случайного должника или укажите конкретный AIMA-ID (Комиссия казино 30%).
-            </div>
+            <div class="sub-hint">Выбивание долгов (Комиссия казино 30%).</div>
             <div class="bet-input-card" style="margin-bottom:12px;">
                 <input type="text" id="raid-target" placeholder="AIMA-ID должника (или пусто)">
             </div>
@@ -674,7 +638,7 @@
 
         <div class="stage-card">
             <h3 class="stage-title">Перевод по AIMA-ID</h3>
-            <div class="sub-hint">Комиссия перевода составляет 50% в доход Банка Казино</div>
+            <div class="sub-hint">Комиссия перевода: 50% в Банк Казино</div>
             <div class="bet-input-card" style="margin-bottom:10px;">
                 <input type="text" id="tr-target" placeholder="AIMA-XXXX-XXXX-XXXX-XXXX">
             </div>
@@ -685,7 +649,7 @@
         </div>
     </main>
 
-    <!-- =================== ВКЛАДКА 3: FORBES (РЕАЛЬНЫЙ РЕЙТИНГ) =================== -->
+    <!-- ВКЛАДКА 3: FORBES -->
     <main id="tab-forbes" class="main-tab">
         <div class="stage-card">
             <h3 class="stage-title">Forbes — Список богатейших</h3>
@@ -695,7 +659,7 @@
         </div>
     </main>
 
-    <!-- ВЫДВИЖНОЕ МЕНЮ ВСЕХ 9 ИГР (ПО КНОПКЕ ☰) -->
+    <!-- ВЫДВИЖНОЕ МЕНЮ ВСЕХ 9 ИГР -->
     <div id="drawer" class="drawer-overlay" onclick="toggleDrawer()">
         <div class="drawer-sheet" onclick="event.stopPropagation()">
             <div style="font-size:17px; font-weight:800; text-align:center;">Выберите игру (9 режимов)</div>
@@ -736,22 +700,22 @@
         const userId = tg?.initDataUnsafe?.user?.id || 5399819309;
         const userName = tg?.initDataUnsafe?.user?.first_name || "Alexander";
 
-        let rawSavedBal = parseFloat(localStorage.getItem("asg_clean_bal"));
-        if (isNaN(rawSavedBal) || rawSavedBal < 0 || rawSavedBal > 100000000000) {
-            rawSavedBal = 10000;
+        // Загружаем баланс из новой чистой переменной (срезаем вчерашний миллиард)
+        let savedBal = parseInt(localStorage.getItem("asg_bal_v3"));
+        if (isNaN(savedBal) || savedBal < 0 || savedBal > 900000000) {
+            savedBal = 366899;
         }
+
+        let cachedForbes = [];
+        try {
+            cachedForbes = JSON.parse(localStorage.getItem("asg_forbes_cache") || "[]");
+        } catch(e) { cachedForbes = []; }
 
         let state = {
-            aima_id: localStorage.getItem("asg_id") || generateCleanAimaId(userId),
-            balance: Math.floor(rawSavedBal),
-            casino_bank: Math.floor(parseFloat(localStorage.getItem("asg_bank")) || 1000000000),
-            collector_level: 1
+            aima_id: localStorage.getItem("asg_id") || `AIMA-${String(userId).padStart(8,"9").slice(0,4)}-8193-8492-1049`,
+            balance: savedBal,
+            casino_bank: 1000000000
         };
-
-        function generateCleanAimaId(uid) {
-            const s = String(uid).padStart(8, "9");
-            return `AIMA-${s.slice(0,4)}-${s.slice(4,8)}-8492-1049`;
-        }
 
         let toastTimer = null;
         function showToast(text) {
@@ -764,33 +728,79 @@
 
         function saveAndRender() {
             state.balance = Math.max(0, Math.floor(state.balance));
-            state.casino_bank = Math.max(1000000, Math.floor(state.casino_bank));
             localStorage.setItem("asg_id", state.aima_id);
-            localStorage.setItem("asg_clean_bal", String(state.balance));
-            localStorage.setItem("asg_bank", String(state.casino_bank));
+            localStorage.setItem("asg_bal_v3", String(state.balance));
 
-            document.getElementById("ui-balance").innerText = state.balance.toLocaleString("en-US");
+            const balEl = document.getElementById("ui-balance");
+            balEl.innerText = state.balance.toLocaleString("en-US");
+
+            if (state.balance > 99999999) balEl.style.fontSize = "25px";
+            else if (state.balance > 999999) balEl.style.fontSize = "31px";
+            else balEl.style.fontSize = "36px";
+
             document.getElementById("ui-aima-id").innerText = state.aima_id;
             const bankEl = document.getElementById("ui-casino-bank");
             if (bankEl) bankEl.innerText = state.casino_bank.toLocaleString("en-US");
         }
 
+        // Утренняя функция мгновенной отрисовки Forbes из кэша + живого ответа
+        function renderForbesList(list) {
+            const box = document.getElementById("forbes-list");
+            if (!box) return;
+
+            let rows = Array.isArray(list) && list.length > 0 ? [...list] : [...cachedForbes];
+
+            // Гарантируем, что текущий игрок всегда есть в списке со своим актуальным балансом
+            const myIndex = rows.findIndex(x => x.aima_id === state.aima_id || x.username === userName);
+            if (myIndex >= 0) {
+                rows[myIndex].balance = state.balance;
+            } else {
+                rows.push({ username: userName, aima_id: state.aima_id, balance: state.balance });
+            }
+
+            rows.sort((a, b) => b.balance - a.balance);
+            cachedForbes = rows;
+            localStorage.setItem("asg_forbes_cache", JSON.stringify(rows));
+
+            box.innerHTML = "";
+            rows.forEach((p, idx) => {
+                const row = document.createElement("div");
+                row.className = "forbes-row";
+                row.innerHTML = `
+                    <div class="forbes-left">
+                        <div class="forbes-rank">#${idx + 1}</div>
+                        <div>
+                            <div class="forbes-name">${p.username}</div>
+                            <div class="forbes-id">${p.aima_id}</div>
+                        </div>
+                    </div>
+                    <div class="forbes-bal">${Math.floor(p.balance).toLocaleString("en-US")} ASG</div>
+                `;
+                box.appendChild(row);
+            });
+        }
+
         async function syncDelta(balDelta, bankDelta) {
+            renderForbesList();
             try {
                 const res = await fetch(`${API_URL}/api/sync`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         user_id: userId,
+                        username: userName,
                         balance_delta: Math.floor(balDelta),
                         bank_delta: Math.floor(bankDelta)
                     })
                 });
                 if (res.ok) {
                     const d = await res.json();
-                    state.balance = Math.floor(d.balance);
-                    state.casino_bank = Math.floor(d.casino_bank);
+                    if (typeof d.balance === "number" && d.balance < 900000000) {
+                        state.balance = Math.floor(d.balance);
+                    }
+                    if (d.casino_bank) state.casino_bank = Math.floor(d.casino_bank);
                     saveAndRender();
+                    if (d.forbes) renderForbesList(d.forbes);
                 }
             } catch (e) {}
         }
@@ -827,29 +837,21 @@
             tg?.HapticFeedback?.impactOccurred("light");
         }
 
-        function toggleDrawer() {
-            document.getElementById("drawer").classList.toggle("open");
-        }
+        function toggleDrawer() { document.getElementById("drawer").classList.toggle("open"); }
 
         function pickFromDrawer(gameId) {
             toggleDrawer();
             switchMainTab('games');
             const pills = document.querySelectorAll(".strip-pill");
             pills.forEach(p => {
-                if (p.getAttribute("onclick").includes(gameId)) {
-                    selectGame(gameId, p);
-                }
+                if (p.getAttribute("onclick").includes(gameId)) selectGame(gameId, p);
             });
         }
 
-        function openModalTransfer() {
-            switchMainTab('farm');
-            showToast("Открыт раздел Коллекторов и Переводов");
-        }
-
+        function openModalTransfer() { switchMainTab('farm'); }
         function copyAimaId() {
             navigator.clipboard?.writeText(state.aima_id);
-            showToast("Ваш AIMA-ID скопирован");
+            showToast("AIMA-ID скопирован");
         }
 
         function switchMainTab(tab) {
@@ -857,7 +859,10 @@
             document.querySelectorAll(".b-nav-btn").forEach(b => b.classList.remove("active"));
             document.getElementById(`tab-${tab}`).classList.add("active");
             document.getElementById(`nav-${tab}`).classList.add("active");
-            if (tab === "forbes") loadForbes();
+            if (tab === "forbes") {
+                renderForbesList(); // Мгновенно показываем без ожидания
+                loadForbes();       // И фоново подтягиваем свежих игроков из БД
+            }
             tg?.HapticFeedback?.impactOccurred("light");
         }
 
@@ -869,20 +874,17 @@
             tg?.HapticFeedback?.impactOccurred("light");
         }
 
-        // ================= 1. CLASSIC SLOTS =================
+        // ================= 1. SLOTS =================
         function spinSlots() {
             const bet = getBet();
             if (!bet) return;
-
             const btn = document.getElementById("btn-slot-spin");
             const r1 = document.getElementById("slot-1");
             const r2 = document.getElementById("slot-2");
             const r3 = document.getElementById("slot-3");
 
             state.balance -= bet;
-            state.casino_bank += bet;
             saveAndRender();
-
             btn.disabled = true;
             r1.classList.add("spin-anim");
             r2.classList.add("spin-anim");
@@ -896,35 +898,28 @@
 
             if (roll < 0.70) {
                 const s = symbols[Math.floor(Math.random() * symbols.length)];
-                const nearMiss = Math.random() < 0.65;
-                const s2 = nearMiss ? s : symbols[Math.floor(Math.random() * symbols.length)];
+                const s2 = Math.random() < 0.65 ? s : symbols[Math.floor(Math.random() * symbols.length)];
                 const rest = symbols.filter(x => x !== s);
-                const s3 = rest[Math.floor(Math.random() * rest.length)];
-                final = [s, s2, s3];
+                final = [s, s2, rest[Math.floor(Math.random() * rest.length)]];
                 mult = 0;
             } else if (roll < 0.90) {
-                final = ["7", "7", "🍒"];
-                mult = 2;
+                final = ["7", "7", "🍒"]; mult = 2;
             } else if (roll < 0.985) {
                 const s = ["💎", "🔔", "🍒"][Math.floor(Math.random() * 3)];
-                final = [s, s, s];
-                mult = 5;
+                final = [s, s, s]; mult = 5;
             } else {
-                final = ["7", "7", "7"];
-                mult = 25;
+                final = ["7", "7", "7"]; mult = 25;
             }
 
-            setTimeout(() => { r1.classList.remove("spin-anim"); r1.innerText = final[0]; tg?.HapticFeedback?.impactOccurred("light"); }, 350);
-            setTimeout(() => { r2.classList.remove("spin-anim"); r2.innerText = final[1]; tg?.HapticFeedback?.impactOccurred("light"); }, 650);
+            setTimeout(() => { r1.classList.remove("spin-anim"); r1.innerText = final[0]; }, 350);
+            setTimeout(() => { r2.classList.remove("spin-anim"); r2.innerText = final[1]; }, 650);
             setTimeout(() => {
                 r3.classList.remove("spin-anim");
                 r3.innerText = final[2];
                 btn.disabled = false;
-
                 if (mult > 0) {
                     const win = safePayout(bet * mult);
                     state.balance += win;
-                    state.casino_bank -= win;
                     saveAndRender();
                     syncDelta(win - bet, bet - win);
                     showToast(`Выигрыш: +${win.toLocaleString("en-US")} ASG`);
@@ -939,7 +934,6 @@
 
         // ================= 2. MINES =================
         let mines = { active: false, bet: 0, bombsCount: 3, bombSet: new Set(), opened: new Set(), mult: 1.0 };
-
         function resetMinesBoard() {
             const grid = document.getElementById("mines-grid");
             grid.innerHTML = "";
@@ -951,20 +945,15 @@
                 grid.appendChild(d);
             }
         }
-
         function startMines() {
             const bet = getBet();
             if (!bet) return;
             const bCount = parseInt(document.getElementById("mines-bombs").value);
-
             state.balance -= bet;
-            state.casino_bank += bet;
             saveAndRender();
 
             mines = { active: true, bet: bet, bombsCount: bCount, bombSet: new Set(), opened: new Set(), mult: 1.0 };
-            while (mines.bombSet.size < bCount) {
-                mines.bombSet.add(Math.floor(Math.random() * 25));
-            }
+            while (mines.bombSet.size < bCount) mines.bombSet.add(Math.floor(Math.random() * 25));
 
             resetMinesBoard();
             document.getElementById("btn-mines-start").disabled = true;
@@ -973,11 +962,9 @@
             cashBtn.innerText = `Забрать ${bet}`;
             tg?.HapticFeedback?.impactOccurred("medium");
         }
-
         function clickMinesTile(idx, tileEl) {
             if (!mines.active || mines.opened.has(idx)) return;
             mines.opened.add(idx);
-
             const hitBomb = mines.bombSet.has(idx) || (mines.opened.size > 2 && Math.random() < 0.14);
 
             if (hitBomb) {
@@ -985,9 +972,7 @@
                 tileEl.innerText = "💣";
                 mines.active = false;
                 document.getElementById("btn-mines-start").disabled = false;
-                const cashBtn = document.getElementById("btn-mines-cash");
-                cashBtn.disabled = true;
-                cashBtn.innerText = "Забрать";
+                document.getElementById("btn-mines-cash").disabled = true;
                 syncDelta(-mines.bet, mines.bet);
                 showToast("Взрыв на мине!");
                 tg?.HapticFeedback?.notificationOccurred("error");
@@ -1001,34 +986,26 @@
                 tg?.HapticFeedback?.impactOccurred("light");
             }
         }
-
         function cashoutMines() {
             if (!mines.active || mines.opened.size === 0) return;
             const win = safePayout(mines.bet * mines.mult);
             mines.active = false;
             state.balance += win;
-            state.casino_bank -= win;
             saveAndRender();
             syncDelta(win - mines.bet, mines.bet - win);
-
             document.getElementById("btn-mines-start").disabled = false;
-            const cashBtn = document.getElementById("btn-mines-cash");
-            cashBtn.disabled = true;
-            cashBtn.innerText = "Забрать";
+            document.getElementById("btn-mines-cash").disabled = true;
             showToast(`Выигрыш: +${win.toLocaleString("en-US")} ASG`);
             tg?.HapticFeedback?.notificationOccurred("success");
         }
 
         // ================= 3. CRASH =================
         let crash = { active: false, bet: 0, mult: 1.00, point: 1.00, timer: null };
-
         function startCrash() {
             if (crash.active) return;
             const bet = getBet();
             if (!bet) return;
-
             state.balance -= bet;
-            state.casino_bank += bet;
             saveAndRender();
 
             const r = Math.random();
@@ -1039,7 +1016,6 @@
             crash.active = true;
             crash.bet = bet;
             crash.mult = 1.00;
-
             document.getElementById("btn-crash-go").disabled = true;
             const takeBtn = document.getElementById("btn-crash-take");
             takeBtn.disabled = false;
@@ -1053,10 +1029,9 @@
                     crash.active = false;
                     document.getElementById("crash-mult").innerText = `${crash.point.toFixed(2)}x`;
                     document.getElementById("crash-mult").style.color = "var(--red)";
-                    document.getElementById("crash-status").innerText = "Улетела! Вы не успели остановить";
+                    document.getElementById("crash-status").innerText = "Улетела!";
                     document.getElementById("btn-crash-go").disabled = false;
                     takeBtn.disabled = true;
-                    takeBtn.innerText = "Остановить";
                     syncDelta(-crash.bet, crash.bet);
                     showToast(`Краш на ${crash.point.toFixed(2)}x`);
                     tg?.HapticFeedback?.notificationOccurred("error");
@@ -1067,57 +1042,43 @@
                 }
             }, 80);
         }
-
         function cashoutCrash() {
             if (!crash.active) return;
             clearInterval(crash.timer);
             crash.active = false;
             const win = safePayout(crash.bet * crash.mult);
             state.balance += win;
-            state.casino_bank -= win;
             saveAndRender();
             syncDelta(win - crash.bet, crash.bet - win);
-
             document.getElementById("crash-mult").style.color = "var(--green)";
-            document.getElementById("crash-status").innerText = `Остановлено на ${crash.mult.toFixed(2)}x`;
             document.getElementById("btn-crash-go").disabled = false;
-            const takeBtn = document.getElementById("btn-crash-take");
-            takeBtn.disabled = true;
-            takeBtn.innerText = "Остановить";
+            document.getElementById("btn-crash-take").disabled = true;
             showToast(`Выигрыш: +${win.toLocaleString("en-US")} ASG`);
             tg?.HapticFeedback?.notificationOccurred("success");
         }
 
-        // ================= 4. HI-LO CARDS =================
+        // ================= 4. HI-LO =================
         let hilo = { active: false, bet: 0, card: 8, mult: 1.0 };
         const cardNames = { 11: "J (11)", 12: "Q (12)", 13: "K (13)", 14: "A (14)" };
-
         function formatCard(n) { return cardNames[n] || String(n); }
-
         function startHiLo() {
             const bet = getBet();
             if (!bet) return;
             state.balance -= bet;
-            state.casino_bank += bet;
             saveAndRender();
-
             hilo = { active: true, bet: bet, card: Math.floor(Math.random() * 13) + 2, mult: 1.0 };
             document.getElementById("hilo-card").innerText = formatCard(hilo.card);
-            document.getElementById("hilo-hint").innerText = "Угадайте следующую карту (2–14)";
             document.getElementById("btn-hilo-hi").disabled = false;
             document.getElementById("btn-hilo-lo").disabled = false;
             document.getElementById("btn-hilo-start").disabled = true;
             document.getElementById("btn-hilo-cash").disabled = true;
         }
-
         function guessHiLo(dir) {
             if (!hilo.active) return;
             let next = Math.floor(Math.random() * 13) + 2;
             const winCond = (dir === 'hi' && next >= hilo.card) || (dir === 'lo' && next <= hilo.card);
             const finalWin = winCond && Math.random() < 0.82;
-            if (!finalWin) {
-                next = dir === 'hi' ? Math.max(2, hilo.card - 1) : Math.min(14, hilo.card + 1);
-            }
+            if (!finalWin) next = dir === 'hi' ? Math.max(2, hilo.card - 1) : Math.min(14, hilo.card + 1);
 
             const prevCard = hilo.card;
             hilo.card = next;
@@ -1130,61 +1091,47 @@
                 const cashBtn = document.getElementById("btn-hilo-cash");
                 cashBtn.disabled = false;
                 cashBtn.innerText = `Забрать ${curWin}`;
-                tg?.HapticFeedback?.impactOccurred("light");
             } else {
                 hilo.active = false;
-                document.getElementById("hilo-hint").innerText = "Не угадали! Ставка сгорела";
                 document.getElementById("btn-hilo-hi").disabled = true;
                 document.getElementById("btn-hilo-lo").disabled = true;
                 document.getElementById("btn-hilo-start").disabled = false;
                 document.getElementById("btn-hilo-cash").disabled = true;
-                document.getElementById("btn-hilo-cash").innerText = "Забрать";
                 syncDelta(-hilo.bet, hilo.bet);
                 showToast("Проигрыш в Hi-Lo");
                 tg?.HapticFeedback?.notificationOccurred("error");
             }
         }
-
         function cashoutHiLo() {
-            if (!hilo.active || hilo.mult <= 1.0) return;
+            if (!hilo.active) return;
             const win = safePayout(hilo.bet * hilo.mult);
             hilo.active = false;
             state.balance += win;
-            state.casino_bank -= win;
             saveAndRender();
             syncDelta(win - hilo.bet, hilo.bet - win);
-
             document.getElementById("btn-hilo-hi").disabled = true;
             document.getElementById("btn-hilo-lo").disabled = true;
             document.getElementById("btn-hilo-start").disabled = false;
-            const cashBtn = document.getElementById("btn-hilo-cash");
-            cashBtn.disabled = true;
-            cashBtn.innerText = "Забрать";
+            document.getElementById("btn-hilo-cash").disabled = true;
             showToast(`Выигрыш: +${win.toLocaleString("en-US")} ASG`);
             tg?.HapticFeedback?.notificationOccurred("success");
         }
 
-        // ================= 5. COIN FLIP =================
+        // ================= 5. COIN =================
         function playCoin(choice) {
             const bet = getBet();
             if (!bet) return;
             state.balance -= bet;
-            state.casino_bank += bet;
             saveAndRender();
-
             const vis = document.getElementById("coin-visual");
             vis.innerText = "🔄";
-            tg?.HapticFeedback?.impactOccurred("medium");
-
             setTimeout(() => {
                 const isWin = Math.random() < 0.42;
                 const outcome = isWin ? choice : (choice === 'eagle' ? 'tails' : 'eagle');
                 vis.innerText = outcome === 'eagle' ? "🦅" : "👑";
-
                 if (isWin) {
                     const win = safePayout(bet * 1.9);
                     state.balance += win;
-                    state.casino_bank -= win;
                     saveAndRender();
                     syncDelta(win - bet, bet - win);
                     showToast(`Выигрыш: +${win.toLocaleString("en-US")} ASG`);
@@ -1202,33 +1149,21 @@
             const bet = getBet();
             if (!bet) return;
             state.balance -= bet;
-            state.casino_bank += bet;
             saveAndRender();
-
             const vis = document.getElementById("dice-visual");
             vis.innerText = "🎲 🔄";
-
             setTimeout(() => {
                 let d1 = Math.floor(Math.random() * 6) + 1;
                 let d2 = Math.floor(Math.random() * 6) + 1;
                 let sum = d1 + d2;
-
-                if (Math.random() < 0.25) {
-                    if (mode === 'low' && sum < 7) { d1 = 5; d2 = 4; sum = 9; }
-                    if (mode === 'high' && sum > 7) { d1 = 2; d2 = 3; sum = 5; }
-                    if (mode === 'seven' && sum === 7) { d1 = 3; d2 = 3; sum = 6; }
-                }
-
                 vis.innerText = `🎲 ${d1} + ${d2} = ${sum}`;
                 let mult = 0;
                 if (mode === 'low' && sum < 7) mult = 1.9;
                 if (mode === 'high' && sum > 7) mult = 1.9;
                 if (mode === 'seven' && sum === 7) mult = 4.5;
-
                 if (mult > 0) {
                     const win = safePayout(bet * mult);
                     state.balance += win;
-                    state.casino_bank -= win;
                     saveAndRender();
                     syncDelta(win - bet, bet - win);
                     showToast(`Выигрыш: +${win.toLocaleString("en-US")} ASG`);
@@ -1246,42 +1181,24 @@
             const bet = getBet();
             if (!bet) return;
             state.balance -= bet;
-            state.casino_bank += bet;
             saveAndRender();
-
             const vis = document.getElementById("roulette-visual");
             vis.innerText = "🌀";
-
             setTimeout(() => {
                 const r = Math.random();
-                let resColor = "black";
-                let num = Math.floor(Math.random() * 36) + 1;
-                if (r < 0.04) { resColor = "green"; num = 0; }
-                else if (r < 0.52) { resColor = "red"; }
-
-                if (resColor === color && Math.random() < 0.18) {
-                    resColor = color === "red" ? "black" : "red";
-                }
-
-                const badge = resColor === "green" ? "🟢 0" : (resColor === "red" ? `🔴 ${num}` : `⚫ ${num}`);
-                vis.innerText = badge;
-
-                let mult = 0;
-                if (color === resColor) {
-                    mult = color === "green" ? 12 : 1.9;
-                }
-
+                let resColor = r < 0.04 ? "green" : (r < 0.52 ? "red" : "black");
+                let mult = (color === resColor) ? (color === "green" ? 12 : 1.9) : 0;
+                vis.innerText = resColor === "green" ? "🟢 0" : (resColor === "red" ? "🔴" : "⚫");
                 if (mult > 0) {
                     const win = safePayout(bet * mult);
                     state.balance += win;
-                    state.casino_bank -= win;
                     saveAndRender();
                     syncDelta(win - bet, bet - win);
                     showToast(`Выигрыш: +${win.toLocaleString("en-US")} ASG`);
                     tg?.HapticFeedback?.notificationOccurred("success");
                 } else {
                     syncDelta(-bet, bet);
-                    showToast(`Выпало ${badge}`);
+                    showToast("Не угадали!");
                     tg?.HapticFeedback?.notificationOccurred("error");
                 }
             }, 650);
@@ -1289,69 +1206,49 @@
 
         // ================= 8. TOWER =================
         let tower = { active: false, bet: 0, floor: 0, mult: 1.0 };
-
         function startTower() {
             const bet = getBet();
             if (!bet) return;
             state.balance -= bet;
-            state.casino_bank += bet;
             saveAndRender();
-
             tower = { active: true, bet: bet, floor: 0, mult: 1.0 };
             for (let i = 0; i < 3; i++) document.getElementById(`tw-${i}`).innerText = "🚪";
-            document.getElementById("tower-hint").innerText = "Этаж 1 / 5 — Выберите дверь";
             document.getElementById("btn-tower-start").disabled = true;
             document.getElementById("btn-tower-cash").disabled = true;
         }
-
         function stepTower(doorIdx) {
             if (!tower.active) return;
             const winStep = Math.random() < 0.56;
-
             if (winStep) {
                 tower.floor++;
                 tower.mult = +(tower.mult * 1.45).toFixed(2);
                 document.getElementById(`tw-${doorIdx}`).innerText = "💎";
                 const curWin = safePayout(tower.bet * tower.mult);
-
-                if (tower.floor >= 5) {
-                    cashoutTower();
-                    return;
-                }
-                setTimeout(() => {
-                    for (let i = 0; i < 3; i++) document.getElementById(`tw-${i}`).innerText = "🚪";
-                }, 380);
-                document.getElementById("tower-hint").innerText = `Этаж ${tower.floor + 1} / 5 (Куш: ${curWin} ASG)`;
+                if (tower.floor >= 5) { cashoutTower(); return; }
+                setTimeout(() => { for (let i = 0; i < 3; i++) document.getElementById(`tw-${i}`).innerText = "🚪"; }, 380);
+                document.getElementById("tower-hint").innerText = `Этаж ${tower.floor + 1} / 5 (${curWin} ASG)`;
                 const cBtn = document.getElementById("btn-tower-cash");
                 cBtn.disabled = false;
                 cBtn.innerText = `Забрать ${curWin}`;
-                tg?.HapticFeedback?.impactOccurred("light");
             } else {
                 document.getElementById(`tw-${doorIdx}`).innerText = "💀";
                 tower.active = false;
-                document.getElementById("tower-hint").innerText = "Ловушка! Вы упали с башни";
                 document.getElementById("btn-tower-start").disabled = false;
                 document.getElementById("btn-tower-cash").disabled = true;
-                document.getElementById("btn-tower-cash").innerText = "Забрать";
                 syncDelta(-tower.bet, tower.bet);
                 showToast("Ловушка в Башне!");
                 tg?.HapticFeedback?.notificationOccurred("error");
             }
         }
-
         function cashoutTower() {
             if (!tower.active || tower.floor === 0) return;
             const win = safePayout(tower.bet * tower.mult);
             tower.active = false;
             state.balance += win;
-            state.casino_bank -= win;
             saveAndRender();
             syncDelta(win - tower.bet, tower.bet - win);
-
             document.getElementById("btn-tower-start").disabled = false;
-            const cBtn = document.getElementById("btn-tower-cash");
-            cBtn.disabled = true;
-            cBtn.innerText = "Забрать";
+            document.getElementById("btn-tower-cash").disabled = true;
             showToast(`Выигрыш: +${win.toLocaleString("en-US")} ASG`);
             tg?.HapticFeedback?.notificationOccurred("success");
         }
@@ -1361,42 +1258,32 @@
             const bet = getBet();
             if (!bet) return;
             state.balance -= bet;
-            state.casino_bank += bet;
             saveAndRender();
-
             for (let i = 0; i < 3; i++) document.getElementById(`th-${i}`).innerText = "🔄";
-            tg?.HapticFeedback?.impactOccurred("medium");
-
             setTimeout(() => {
                 const isWin = Math.random() < 0.30;
                 const winCup = isWin ? idx : (idx + 1) % 3;
-                for (let i = 0; i < 3; i++) {
-                    document.getElementById(`th-${i}`).innerText = (i === winCup) ? "💎" : "🥤";
-                }
-
+                for (let i = 0; i < 3; i++) document.getElementById(`th-${i}`).innerText = (i === winCup) ? "💎" : "🥤";
                 if (isWin) {
                     const win = safePayout(bet * 2.6);
                     state.balance += win;
-                    state.casino_bank -= win;
                     saveAndRender();
                     syncDelta(win - bet, bet - win);
                     showToast(`Выигрыш: +${win.toLocaleString("en-US")} ASG`);
                     tg?.HapticFeedback?.notificationOccurred("success");
                 } else {
                     syncDelta(-bet, bet);
-                    showToast("Пусто! Алмаз был под другим стаканом");
+                    showToast("Пусто! Алмаз был рядом");
                     tg?.HapticFeedback?.notificationOccurred("error");
                 }
             }, 500);
         }
 
-        // ================= КЛИКЕР: 10 ASG ЗА КЛИК, 30% НАЛОГ КАЗИНО =================
+        // ================= КЛИКЕР (10 ASG КЛИК, 30% НАЛОГ) =================
         function mintClick() {
-            const tax = 3; // 30% от 10 ASG
-            const net = 7; // +7 ASG игроку
-
+            const tax = 3;
+            const net = 7;
             state.balance += net;
-            state.casino_bank += tax;
             saveAndRender();
             syncDelta(net, tax);
             tg?.HapticFeedback?.impactOccurred("light");
@@ -1405,7 +1292,6 @@
         // ================= КОЛЛЕКТОРЫ =================
         async function runCollectorRaid() {
             const target = document.getElementById("raid-target").value.trim();
-            tg?.HapticFeedback?.impactOccurred("heavy");
             try {
                 const res = await fetch(`${API_URL}/api/collector_raid`, {
                     method: "POST",
@@ -1416,40 +1302,29 @@
                     const d = await res.json();
                     state.balance = Math.floor(d.balance);
                     saveAndRender();
-                    showToast(`Коллекторы выбили +${d.loot} ASG (Налог 30%: ${d.tax})`);
-                    tg?.HapticFeedback?.notificationOccurred("success");
+                    showToast(`Коллекторы выбили +${d.loot} ASG`);
                     return;
                 }
             } catch (e) {}
 
             const raw = Math.floor(150 + Math.random() * 250);
-            const tax = Math.ceil(raw * 0.30);
-            const net = raw - tax;
+            const net = raw - Math.ceil(raw * 0.30);
             state.balance += net;
-            state.casino_bank += tax;
             saveAndRender();
-            syncDelta(net, tax);
-            showToast(`Коллекторы выбили +${net} ASG (Налог 30%: ${tax})`);
-            tg?.HapticFeedback?.notificationOccurred("success");
+            syncDelta(net, Math.ceil(raw * 0.30));
+            showToast(`Коллекторы выбили +${net} ASG`);
         }
 
-        // ================= ПЕРЕВОДЫ ПО AIMA-ID (КОМИССИЯ 50%) =================
+        // ================= ПЕРЕВОДЫ (50% КОМИССИЯ) =================
         async function sendTransfer() {
             const target = document.getElementById("tr-target").value.trim();
             const amount = Math.floor(parseFloat(document.getElementById("tr-amount").value));
-
-            if (!target.startsWith("AIMA-") || isNaN(amount) || amount <= 0) {
+            if (!target.startsWith("AIMA-") || isNaN(amount) || amount <= 0 || amount > state.balance) {
                 showToast("Проверьте AIMA-ID и сумму");
                 return;
             }
-            if (amount > state.balance) {
-                showToast("Недостаточно ASG на счете");
-                return;
-            }
-
             const fee = Math.ceil(amount * 0.50);
             const netSent = Math.floor(amount - fee);
-
             try {
                 const res = await fetch(`${API_URL}/api/transfer`, {
                     method: "POST",
@@ -1460,79 +1335,19 @@
                     const d = await res.json();
                     state.balance = Math.floor(d.balance);
                     saveAndRender();
-                    showToast(`Отправлено ${d.sent} ASG (Комиссия 50%: ${d.fee} ASG)`);
+                    showToast(`Отправлено ${d.sent} ASG (Комиссия: ${d.fee} ASG)`);
                     return;
                 }
             } catch (e) {}
-
             state.balance -= amount;
-            state.casino_bank += fee;
             saveAndRender();
             syncDelta(-amount, fee);
-            showToast(`Отправлено ${netSent} ASG (Комиссия 50%: ${fee} ASG)`);
+            showToast(`Отправлено ${netSent} ASG (Комиссия: ${fee} ASG)`);
         }
 
-        // ================= РЕАЛЬНЫЙ РЕЙТИНГ FORBES =================
+        // ================= FORBES (УТРЕННИЙ МЕТОД ЧЕРЕЗ /api/user) =================
         async function loadForbes() {
-            const box = document.getElementById("forbes-list");
-            box.innerHTML = `<div class="sub-hint">Загрузка всех игроков с сервера...</div>`;
-
-            try {
-                // Сначала гарантированно регистрируем/синхронизируем текущего пользователя в БД
-                await fetch(`${API_URL}/api/user`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        user_id: userId,
-                        username: userName,
-                        current_balance: state.balance
-                    })
-                });
-
-                // Запрашиваем полный рейтинг всех игроков без кэша
-                const res = await fetch(`${API_URL}/api/forbes?t=${Date.now()}`, {
-                    cache: "no-store"
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.casino_bank) {
-                        state.casino_bank = Math.floor(data.casino_bank);
-                        saveAndRender();
-                    }
-
-                    if (data.leaders && data.leaders.length > 0) {
-                        box.innerHTML = "";
-                        data.leaders.forEach((p, idx) => {
-                            const row = document.createElement("div");
-                            row.className = "forbes-row";
-                            row.innerHTML = `
-                                <div class="forbes-left">
-                                    <div class="forbes-rank">#${idx + 1}</div>
-                                    <div>
-                                        <div class="forbes-name">${p.username}</div>
-                                        <div class="forbes-id">${p.aima_id}</div>
-                                    </div>
-                                </div>
-                                <div class="forbes-bal">${Math.floor(p.balance).toLocaleString("en-US")} ASG</div>
-                            `;
-                            box.appendChild(row);
-                        });
-                        tg?.HapticFeedback?.notificationOccurred("success");
-                        return;
-                    }
-                }
-            } catch (e) {
-                console.error("Forbes sync error:", e);
-            }
-
-            box.innerHTML = `<div class="sub-hint">Сервер просыпается... Нажмите «Обновить список Forbes» через пару секунд.</div>`;
-        }
-
-        // Инициализация при запуске
-        async function boot() {
-            saveAndRender();
-            resetMinesBoard();
+            renderForbesList(); // Сразу рисуем то, что уже в памяти (без надписи "Сервер просыпается")
             try {
                 const res = await fetch(`${API_URL}/api/user`, {
                     method: "POST",
@@ -1541,16 +1356,27 @@
                 });
                 if (res.ok) {
                     const d = await res.json();
-                    state.aima_id = d.aima_id;
-                    if (d.balance >= 0) state.balance = Math.floor(d.balance);
+                    if (d.aima_id) state.aima_id = d.aima_id;
+                    if (typeof d.balance === "number" && d.balance > 0 && d.balance < 900000000) {
+                        state.balance = Math.floor(d.balance);
+                    }
                     if (d.casino_bank) state.casino_bank = Math.floor(d.casino_bank);
                     saveAndRender();
+                    if (d.forbes && d.forbes.length > 0) {
+                        renderForbesList(d.forbes);
+                    }
                 }
             } catch (e) {}
+        }
+
+        async function boot() {
+            saveAndRender();
+            resetMinesBoard();
+            renderForbesList();
+            loadForbes();
         }
 
         boot();
     </script>
 </body>
 </html>
-
