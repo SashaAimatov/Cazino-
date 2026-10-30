@@ -14,7 +14,6 @@
             --accent: #ffffff;
             --border: rgba(255, 255, 255, 0.08);
             --input-bg: rgba(255, 255, 255, 0.05);
-            --gold: #f59e0b;
         }
 
         [data-theme="light"] {
@@ -105,26 +104,13 @@
         .farm-circle:active { transform: scale(0.94); }
         .farm-info { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
 
-        /* FORBES (РЕЙТИНГ) */
-        .forbes-list { display: flex; flex-direction: column; gap: 8px; text-align: left; margin-top: 10px; }
-        .forbes-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 14px; background: var(--input-bg); border-radius: 14px; border: 1px solid var(--border);
-        }
-        .forbes-item.top-1 { border-color: var(--gold); background: rgba(245, 158, 11, 0.08); }
-        .f-info { display: flex; align-items: center; gap: 10px; }
-        .f-rank { font-weight: 800; font-size: 14px; color: var(--gold); width: 20px; }
-        .f-name { font-weight: 700; font-size: 14px; }
-        .f-id { font-size: 10px; color: var(--text-muted); font-family: monospace; }
-        .f-bal { font-weight: 800; font-size: 14px; }
-
         .status-msg { margin-top: 12px; font-size: 13px; font-weight: 600; min-height: 20px; }
 
         /* Секции */
         .section { display: none; }
         .section.active { display: block; }
 
-        /* Нижний Dock навигации */
+        /* Нижний Dock навигации (только Игры и Фарм) */
         .bottom-dock {
             position: fixed; bottom: 12px; left: 14px; right: 14px;
             background: var(--bg-card); border: 1px solid var(--border);
@@ -178,23 +164,9 @@
     <div id="sec-farm" class="section">
         <div class="game-card">
             <div class="game-title">Чеканка фишек ASG</div>
-            <div class="farm-circle" onclick="tapFarm()">ASG</div>
+            <div class="farm-circle" onclick="tapMine()">ASG</div>
             <div class="farm-info" id="farm-info">+15 ASG на баланс (-3 ASG налог казино)</div>
             <div class="status-msg" id="msg-farm"></div>
-        </div>
-    </div>
-
-    <!-- 3. ВКЛАДКА FORBES (РЕАЛЬНЫЙ РЕЙТИНГ ИГРОКОВ) -->
-    <div id="sec-forbes" class="section">
-        <div class="game-card">
-            <div class="game-title">🏆 Forbes Рейтинг</div>
-            <div class="forbes-list" id="forbes-container">
-                <div class="forbes-item top-1">
-                    <div class="f-info"><div class="f-rank">1</div><div><div class="f-name">Alexander Aimatov</div><div class="f-id">AIMA-5399-8193</div></div></div>
-                    <div class="f-bal">500,000 ASG</div>
-                </div>
-            </div>
-            <button class="action-btn" onclick="loadForbes()" style="margin-top:14px; font-size:14px; padding:12px;">Обновить рейтинг</button>
         </div>
     </div>
 
@@ -205,9 +177,6 @@
         </button>
         <button class="dock-item" onclick="switchTab('farm', this)">
             <span>⚡</span><span>Фарм</span>
-        </button>
-        <button class="dock-item" onclick="switchTab('forbes', this)">
-            <span>👑</span><span>Forbes</span>
         </button>
     </nav>
 
@@ -248,7 +217,6 @@
             document.querySelectorAll(".dock-item").forEach(b => b.classList.remove("active"));
             document.getElementById(`sec-${tab}`).classList.add("active");
             btn.classList.add("active");
-            if(tab === 'forbes') loadForbes();
             tg?.HapticFeedback?.impactOccurred("light");
         }
 
@@ -265,56 +233,6 @@
                     saveState();
                 }
             } catch(e) {}
-        }
-
-        // РЕАЛЬНЫЙ РЕЙТИНГ FORBES (Синхронизация с сервером и локальным игроком)
-        async function loadForbes() {
-            const container = document.getElementById("forbes-container");
-            container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:10px;">Загрузка рейтинга...</div>`;
-            
-            let list = [
-                { name: userName, id: state.aima_id, bal: state.balance },
-                { name: "Настя", id: "AIMA-7712-4431-1092", bal: 450200 },
-                { name: "Бега", id: "AIMA-3321-9904-5521", bal: 180500 },
-                { name: "Demid", id: "AIMA-8812-3310-4412", bal: 95400 }
-            ];
-
-            // Пытаемся подтянуть данные с бэкенда, если доступен
-            try {
-                const res = await fetch(`${API_URL}/api/user`, {
-                    method: "POST", headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ user_id: userId, username: userName })
-                });
-                if(res.ok) {
-                    const d = await res.json();
-                    state.balance = d.balance;
-                    state.aima_id = d.aima_id;
-                    saveState();
-                    list[0].bal = d.balance;
-                    list[0].id = d.aima_id;
-                }
-            } catch(e) {}
-
-            // Сортировка по убыванию баланса
-            list.sort((a, b) => b.bal - a.bal);
-
-            container.innerHTML = "";
-            list.forEach((item, index) => {
-                const div = document.createElement("div");
-                div.className = `forbes-item ${index === 0 ? 'top-1' : ''}`;
-                div.innerHTML = `
-                    <div class="f-info">
-                        <div class="f-rank">${index + 1}</div>
-                        <div>
-                            <div class="f-name">${item.name}</div>
-                            <div class="f-id">${item.id}</div>
-                        </div>
-                    </div>
-                    <div class="f-bal">${Math.floor(item.bal).toLocaleString("ru-RU")} ASG</div>
-                `;
-                container.appendChild(div);
-            });
-            tg?.HapticFeedback?.notificationOccurred("success");
         }
 
         // ИГРА: СЛОТЫ
@@ -370,9 +288,6 @@
             document.getElementById("msg-farm").innerHTML = `<span style="color:#10b981">+${net} ASG на баланс (-${tax} ASG налог казино)</span>`;
             tg?.HapticFeedback?.impactOccurred("light");
         }
-
-        // Привязываем фарм к круглой кнопке ASG
-        document.querySelector(".farm-circle").onclick = tapMine;
 
         renderUI();
         loadUserData();
