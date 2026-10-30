@@ -23,28 +23,20 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
 
         body {
-            margin: 0;
-            padding: 14px 14px 95px 14px;
+            margin: 0; padding: 14px 14px 95px 14px;
             background: radial-gradient(circle at top, #0f291e 0%, var(--bg-dark) 75%);
-            color: var(--white);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            color: var(--white); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
             min-height: 100vh;
         }
 
         .header-card {
             background: linear-gradient(145deg, rgba(16, 185, 129, 0.18), rgba(12, 28, 22, 0.9));
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(16, 185, 129, 0.35);
-            border-radius: 24px;
-            padding: 18px;
-            text-align: center;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
-            margin-bottom: 16px;
+            backdrop-filter: blur(24px); border: 1px solid rgba(16, 185, 129, 0.35);
+            border-radius: 24px; padding: 18px; text-align: center;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45); margin-bottom: 16px;
         }
 
-        .brand-row {
-            font-size: 13px; font-weight: 800; letter-spacing: 1.4px; color: var(--emerald); text-transform: uppercase;
-        }
+        .brand-row { font-size: 13px; font-weight: 800; letter-spacing: 1.4px; color: var(--emerald); text-transform: uppercase; }
         .slogan { font-size: 10px; color: var(--muted); letter-spacing: 0.8px; margin-top: 2px; }
         .id-badge {
             display: inline-block; margin: 8px 0 10px; padding: 4px 12px;
@@ -92,7 +84,6 @@
             background: rgba(255, 255, 255, 0.08); color: var(--white); font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px;
         }
 
-        /* ТАБЛИЦА ЛИДЕРОВ (РЕЙТИНГ) */
         .leaderboard-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
         .leader-item {
             display: flex; align-items: center; justify-content: space-between;
@@ -105,7 +96,6 @@
         .leader-id { font-size: 11px; color: var(--muted); font-family: monospace; }
         .leader-bal { font-weight: 800; color: var(--emerald); font-size: 15px; }
 
-        /* ИГРОВЫЕ ЭЛЕМЕНТЫ */
         .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 14px 0; }
         .mine-cell {
             aspect-ratio: 1; border-radius: 14px; background: rgba(255, 255, 255, 0.07);
@@ -134,7 +124,6 @@
 
         .status-box { margin-top: 12px; min-height: 22px; text-align: center; font-size: 13px; font-weight: 600; }
 
-        /* Нижнее меню */
         .bottom-nav {
             position: fixed; bottom: 12px; left: 14px; right: 14px;
             background: rgba(12, 26, 20, 0.92); backdrop-filter: blur(24px);
@@ -159,48 +148,37 @@
         <div class="bank-info">Банк казино: <b id="casino-bank">1,000,000,000</b> ASG</div>
     </div>
 
-    <!-- 1. РЕЙТИНГ ИГРОКОВ (ТАБЛИЦА ЛИДЕРОВ) -->
+    <!-- ТАБЛИЦА ЛИДЕРОВ (РЕЙТИНГ) -->
     <div id="sec-rating" class="section active">
         <div class="card">
             <h2>🏆 Топ Игроков <span class="badge">Aimatov Silver</span></h2>
-            <p style="font-size:12px; color:var(--muted); margin-top:0;">Самые богатые игроки экосистемы.</p>
-            <div class="leaderboard-list" id="leaderboard-container">
+            <div class="leaderboard-list">
                 <div class="leader-item top-1">
                     <div class="leader-info">
                         <div class="leader-rank">1</div>
-                        <div>
-                            <div class="leader-name">Alexander Aimatov</div>
-                            <div class="leader-id">AIMA-5399-8193-8492</div>
-                        </div>
+                        <div><div class="leader-name">Alexander Aimatov</div><div class="leader-id">AIMA-5399-8193</div></div>
                     </div>
                     <div class="leader-bal">9,999,999 ASG</div>
                 </div>
                 <div class="leader-item">
                     <div class="leader-info">
                         <div class="leader-rank">2</div>
-                        <div>
-                            <div class="leader-name">Настя</div>
-                            <div class="leader-id">AIMA-7712-4431-1092</div>
-                        </div>
+                        <div><div class="leader-name">Настя</div><div class="leader-id">AIMA-7712-4431</div></div>
                     </div>
                     <div class="leader-bal">450,200 ASG</div>
                 </div>
                 <div class="leader-item">
                     <div class="leader-info">
                         <div class="leader-rank">3</div>
-                        <div>
-                            <div class="leader-name">Бега</div>
-                            <div class="leader-id">AIMA-3321-9904-5521</div>
-                        </div>
+                        <div><div class="leader-name">Бега</div><div class="leader-id">AIMA-3321-9904</div></div>
                     </div>
                     <div class="leader-bal">180,500 ASG</div>
                 </div>
             </div>
-            <button class="btn-sec" onclick="loadRating()" style="margin-top:14px;">Обновить рейтинг</button>
         </div>
     </div>
 
-    <!-- 2. САПЁР -->
+    <!-- САПЁР -->
     <div id="sec-mines" class="section">
         <div class="card">
             <h2>💣 Сапёр (Mines) <span class="badge" id="mines-mult-badge">x1.00</span></h2>
@@ -225,7 +203,7 @@
         </div>
     </div>
 
-    <!-- 3. КРАШ -->
+    <!-- КРАШ -->
     <div id="sec-crash" class="section">
         <div class="card">
             <h2>🚀 Краш-Индекс <span class="badge">Live</span></h2>
@@ -245,7 +223,7 @@
         </div>
     </div>
 
-    <!-- 4. СЛОТЫ -->
+    <!-- СЛОТЫ -->
     <div id="sec-slots" class="section">
         <div class="card">
             <h2>🎰 Слоты Aimatov <span class="badge">До x7</span></h2>
@@ -266,7 +244,7 @@
         </div>
     </div>
 
-    <!-- 5. МАЙНИНГ -->
+    <!-- МАЙНИНГ -->
     <div id="sec-mining" class="section">
         <div class="card" style="text-align:center;">
             <h2>⛏ Майнинг ASG <span class="badge">Налог 10-30%</span></h2>
@@ -284,7 +262,6 @@
         </div>
     </div>
 
-    <!-- НИЖНЕЕ МЕНЮ (APPLE DOCK) -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="openTab('rating', this)"><span class="icon">🏆</span><span>Топ</span></button>
         <button class="nav-item" onclick="openTab('mines', this)"><span class="icon">💣</span><span>Сапёр</span></button>
@@ -328,29 +305,9 @@
             document.getElementById("col-cost").innerText = (state.col_lvl * 5000).toLocaleString("ru-RU");
         }
 
-        async function syncBackend(endpoint, payload) {
-            try {
-                const res = await fetch(`${API_URL}${endpoint}`, {
-                    method: "POST", headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-                if (res.ok) return await res.json();
-            } catch(e) {}
-            return null;
-        }
-
         async function initApp() {
             renderHeader();
             renderMinesGrid();
-            const remote = await syncBackend("/api/user", { user_id: userId, username: userName });
-            if (remote && remote.aima_id) {
-                state.aima_id = remote.aima_id;
-                state.balance = Math.floor(remote.balance);
-                state.casino_bank = Math.floor(remote.casino_bank || state.casino_bank);
-                state.col_lvl = remote.collector_level || state.col_lvl;
-                state.col_accum = remote.pending_collector || 0;
-                saveState();
-            }
         }
 
         function openTab(tabName, btn) {
@@ -373,11 +330,6 @@
             return Math.min(Math.floor(rawWin), maxWin);
         }
 
-        function loadRating() {
-            tg?.HapticFeedback?.notificationOccurred("success");
-        }
-
-        // САПЁР
         let minesGame = { active: false, bet: 0, bombs: 5, step: 0, mult: 1.0, revealed: [] };
         function renderMinesGrid() {
             const grid = document.getElementById("mines-grid");
@@ -436,7 +388,6 @@
             tg?.HapticFeedback?.notificationOccurred("success");
         }
 
-        // КРАШ
         let crashGame = { running: false, bet: 0, currentMult: 1.00, crashPoint: 1.00, timer: null };
         function actionCrash() {
             const btn = document.getElementById("btn-crash");
@@ -476,7 +427,6 @@
             }, 90);
         }
 
-        // СЛОТЫ
         async function playSlots() {
             const bet = Math.ceil(parseFloat(document.getElementById("bet-slots").value));
             const btn = document.getElementById("btn-slots");
@@ -508,7 +458,6 @@
             }, 900);
         }
 
-        // МАЙНИНГ
         function tapMine() {
             state.mine_buf += 15;
             document.getElementById("mine-buf").innerText = state.mine_buf;
