@@ -274,7 +274,7 @@ function render() {
 
 // ---------- связь с сервером ----------
 async function api(path, body) {
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 9; i++) {
     try {
       const r = await fetch(API + path, {
         method: body === undefined ? "GET" : "POST",
@@ -287,10 +287,12 @@ async function api(path, body) {
     } catch (e) {
       if (e && e.msg) throw e;
       if (i === 0) toast("Сервер просыпается, подождите…");
-      await sleep(4000);
+      await sleep(5000);
     }
   }
-  throw { msg: "Нет связи с сервером" };
+  // no-cors запрос проходит, даже если ответ закрыт для страницы: так отличаем "сервер лежит" от "ответ заблокирован"
+  const alive = await fetch(API + "/", { mode: "no-cors" }).then(() => true, () => false);
+  throw { msg: alive ? "Сервер есть, ответ заблокирован (CORS)" : "Сервер недоступен" };
 }
 
 async function call(path, body) {
